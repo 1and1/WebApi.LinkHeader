@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+	<metadata>
+		<id>WebApi.LinkHeader</id>
+		<version>$version$</version>
+		<authors>Bastian Eicher</authors>
+		<copyright>1&amp;1 Internet SE</copyright>
+		<projectUrl>https://github.com/1and1/WebApi.LinkHeader</projectUrl>
+		<description>WebApi.LinkHeader allows you to easily add HTTP Link headers to existing WebAPI endpoints.</description>
+		<summary>Add HTTP Link headers to existing WebAPI endpoints</summary>
+		<tags>WebAPI HTTP Link Header</tags>
+	</metadata>
+</package>
