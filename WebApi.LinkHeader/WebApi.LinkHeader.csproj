@@ -61,7 +61,9 @@
   <ItemGroup>
     <Compile Include="..\AssemblyInfo.Global.cs" />
     <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="HttpResponseHeadersExtensions.cs" />
     <Compile Include="LinkHeaderAttribute.cs" />
+    <Compile Include="RouteLinkHeaderAttribute.cs" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

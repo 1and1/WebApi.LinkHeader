@@ -9,7 +9,7 @@ NuGet package:
 ## Getting started
 
 1. Add the NuGet package to your project.
-2. Add the `[LinkHeader("rel", "http://link/")]` attribute to endpoint methods.
+2. Add the `[LinkHeader("...")]` or `[RouteLinkHeader("...")]` attribute to endpoint methods.
 
 
 ## Sample project
