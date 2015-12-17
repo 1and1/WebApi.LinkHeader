@@ -10,7 +10,7 @@ namespace WebApi.LinkHeader
     public class LinkHeaderAttribute : ActionFilterAttribute
     {
         /// <summary>
-        /// The URI the link shall point to, relative to the <see cref="HttpRequestMessage.RequestUri"/> (with missing trailing slashes automatically appended).
+        /// The URI the link shall point to. If it starts with a slash it is relative to the API root URI otherwise it is relative to the <see cref="HttpRequestMessage.RequestUri"/>. Trailing slashes automatically appended to the base URI.
         /// </summary>
         public string Href { get; }
 
@@ -27,7 +27,7 @@ namespace WebApi.LinkHeader
         /// <summary>
         /// Creates a link attribute.
         /// </summary>
-        /// <param name="href">The URI the link shall point to, relative to the <see cref="HttpRequestMessage.RequestUri"/> (with missing trailing slashes automatically appended).</param>
+        /// <param name="href">The URI the link shall point to. If it startss with a slash it is relative to the API root URI otherwise it is relative to the <see cref="HttpRequestMessage.RequestUri"/>. Trailing slashes automatically appended to the base URI.</param>
         public LinkHeaderAttribute(string href)
         {
             Href = href;
@@ -35,10 +35,20 @@ namespace WebApi.LinkHeader
 
         public override void OnActionExecuted(HttpActionExecutedContext actionExecutedContext)
         {
-            var baseUri = actionExecutedContext.Request.RequestUri.OriginalString.EndsWith("/")
-                ? actionExecutedContext.Request.RequestUri
-                : new Uri(actionExecutedContext.Request.RequestUri.OriginalString + "/", UriKind.Absolute);
-            actionExecutedContext.Response.Headers.AddLink(new Uri(baseUri, Href), Rel, Title);
+            var baseUri = EnsureTrailingSlash(actionExecutedContext.Request.RequestUri);
+            if (Href.StartsWith("/")) baseUri = new Uri(baseUri, actionExecutedContext.Request.GetRequestContext().VirtualPathRoot);
+
+            actionExecutedContext.Response.Headers.AddLink(new Uri(EnsureTrailingSlash(baseUri), Href), Rel, Title);
+        }
+
+        /// <summary>
+        /// Adds a trailing slash to the URI if it does not already have one.
+        /// </summary>
+        private static Uri EnsureTrailingSlash(Uri uri)
+        {
+            return uri.OriginalString.EndsWith("/")
+                ? uri
+                : new Uri(uri.OriginalString + "/", uri.IsAbsoluteUri ? UriKind.Absolute : UriKind.Relative);
         }
     }
 }
