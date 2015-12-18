@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Web.Http;
 
 namespace WebApi.LinkHeader.Sample.Controllers
@@ -64,6 +65,16 @@ namespace WebApi.LinkHeader.Sample.Controllers
         public string ProductPrice(int id)
         {
             return id + ",- USD";
+        }
+
+        /// <summary>
+        /// Always throws an exception, which causes the link header to be ignored/skipped.
+        /// </summary>
+        [HttpGet, Route("exception")]
+        [LinkHeader("/")]
+        public void Exception()
+        {
+            throw new Exception("Test exception");
         }
     }
 }

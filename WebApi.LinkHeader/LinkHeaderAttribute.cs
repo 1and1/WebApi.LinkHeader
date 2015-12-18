@@ -27,7 +27,7 @@ namespace WebApi.LinkHeader
         /// <summary>
         /// Creates a link attribute.
         /// </summary>
-        /// <param name="href">The URI the link shall point to. If it startss with a slash it is relative to the API root URI otherwise it is relative to the <see cref="HttpRequestMessage.RequestUri"/>. Trailing slashes automatically appended to the base URI.</param>
+        /// <param name="href">The URI the link shall point to. If it starts with a slash it is relative to the API root URI otherwise it is relative to the <see cref="HttpRequestMessage.RequestUri"/>. Trailing slashes automatically appended to the base URI.</param>
         public LinkHeaderAttribute(string href)
         {
             Href = href;
@@ -35,6 +35,8 @@ namespace WebApi.LinkHeader
 
         public override void OnActionExecuted(HttpActionExecutedContext actionExecutedContext)
         {
+            if (actionExecutedContext.Response == null) return;
+
             var baseUri = EnsureTrailingSlash(actionExecutedContext.Request.RequestUri);
             if (Href.StartsWith("/")) baseUri = new Uri(baseUri, actionExecutedContext.Request.GetRequestContext().VirtualPathRoot);
 

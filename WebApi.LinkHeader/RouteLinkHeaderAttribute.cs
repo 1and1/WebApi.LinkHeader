@@ -41,6 +41,8 @@ namespace WebApi.LinkHeader
 
         public override void OnActionExecuted(HttpActionExecutedContext actionExecutedContext)
         {
+            if (actionExecutedContext.Response == null) return;
+
             string href = actionExecutedContext.Request.GetUrlHelper().Link(RouteName,
                 PassThroughRouteParameters ? actionExecutedContext.Request.GetRouteData().Values : null);
             actionExecutedContext.Response.Headers.AddLink(new Uri(href, UriKind.Absolute), Rel, Title);
