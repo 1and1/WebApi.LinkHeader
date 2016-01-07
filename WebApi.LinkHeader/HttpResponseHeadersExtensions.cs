@@ -19,7 +19,10 @@ namespace WebApi.LinkHeader
             if (rel != null && (rel.Contains(",") || rel.Contains(";"))) throw new ArgumentException("rel may not contain commas or semicolons because they are used as separator characters in HTTP headers.", nameof(rel));
             if (title != null && (title.Contains(",") || title.Contains(";"))) throw new ArgumentException("title may not contain commas or semicolons because they are used as separator characters in HTTP headers.", nameof(title));
 
-            var builder = new StringBuilder("<" + href.AbsoluteUri + ">");
+            string escaped = href.AbsoluteUri.
+                // Leave curly braces unescaped for template support
+                Replace("%7B", "{").Replace("%7D", "}");
+            var builder = new StringBuilder("<" + escaped + ">");
             if (!string.IsNullOrEmpty(rel)) builder.Append("; rel=" + rel);
             if (!string.IsNullOrEmpty(title)) builder.Append("; title=" + title);
 
