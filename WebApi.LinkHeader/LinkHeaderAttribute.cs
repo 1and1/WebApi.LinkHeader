@@ -37,10 +37,20 @@ namespace WebApi.LinkHeader
         {
             if (actionExecutedContext.Response == null) return;
 
-            var baseUri = EnsureTrailingSlash(actionExecutedContext.Request.RequestUri);
-            if (Href.StartsWith("/")) baseUri = new Uri(baseUri, actionExecutedContext.Request.GetRequestContext().VirtualPathRoot);
+            string href = Href.StartsWith("/")
+                ? EnsureTrailingSlash(actionExecutedContext.Request.GetRequestContext().VirtualPathRoot) + Href.Substring(1)
+                : Href;
+            var uri = new Uri(EnsureTrailingSlash(actionExecutedContext.Request.RequestUri), href);
 
-            actionExecutedContext.Response.Headers.AddLink(new Uri(EnsureTrailingSlash(baseUri), Href), Rel, Title);
+            actionExecutedContext.Response.Headers.AddLink(uri, Rel, Title);
+        }
+
+        /// <summary>
+        /// Adds a trailing slash to the URI if it does not already have one.
+        /// </summary>
+        private static string EnsureTrailingSlash(string uri)
+        {
+            return uri.EndsWith("/") ? uri : uri + "/";
         }
 
         /// <summary>

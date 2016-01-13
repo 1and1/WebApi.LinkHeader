@@ -14,4 +14,4 @@ NuGet package:
 
 ## Sample project
 
-The source code includes a sample project that uses demonstrates the usage of WebApi.LinkHeader. You can build and run it using Visual Studio 2015. By default the instance will be hosted by IIS Express at `http://localhost:42980/`.
+The source code includes a sample project that uses demonstrates the usage of WebApi.LinkHeader. You can build and run it using Visual Studio 2015. By default the instance will be hosted by IIS Express at `http://localhost:42980/sample/`.
