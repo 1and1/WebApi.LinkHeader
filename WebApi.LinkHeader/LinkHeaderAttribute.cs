@@ -25,6 +25,11 @@ namespace WebApi.LinkHeader
         public string Title { get; set; }
 
         /// <summary>
+        /// <c>true</c> if <see cref="Href"/> is an RFC 6570 URI Template; <c>false</c> if it is a normal RFC 3986 URI.
+        /// </summary>
+        public bool Templated { get; set; }
+
+        /// <summary>
         /// Creates a link attribute.
         /// </summary>
         /// <param name="href">The URI the link shall point to. If it starts with a slash it is relative to the API root URI otherwise it is relative to the <see cref="HttpRequestMessage.RequestUri"/>. Trailing slashes automatically appended to the base URI.</param>
@@ -42,7 +47,7 @@ namespace WebApi.LinkHeader
                 : Href;
             var uri = new Uri(EnsureTrailingSlash(actionExecutedContext.Request.RequestUri), href);
 
-            actionExecutedContext.Response.Headers.AddLink(uri, Rel, Title);
+            actionExecutedContext.Response.Headers.AddLink(uri, Rel, Title, Templated);
         }
 
         /// <summary>

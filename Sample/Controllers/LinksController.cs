@@ -40,9 +40,10 @@ namespace WebApi.LinkHeader.Sample.Controllers
         }
 
         /// <summary>
-        /// Collection with no explicit links.
+        /// Collection with a template link for the child elements.
         /// </summary>
         [HttpGet, Route("products")]
+        [LinkHeader("{id}", Rel = "child", Templated = true)]
         public IEnumerable<int> Products()
         {
             return new[] {1, 2, 3};

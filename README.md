@@ -43,6 +43,22 @@ public Address Address(int id)
 Links starting with `/` are treated as relative to the root of the WebAPI application, not the domain.
 
 
+### Link templates
+
+[URI Templates](https://tools.ietf.org/html/rfc6570) are URIs with placeholders like `{id}`. You can use the attribute property `Templated` to indicate the Href should be treated as a template.
+
+This adds the property `templated=true` to the HTTP Link Header. It also prevents `{` and `}` from being escaped using URL encoding, e.g. `{id}` does not get turned into `%7Bid%7D`.
+
+Sample:
+```cs
+[LinkHeader("http://domain/path/{id}", Rel = "child", Templated = true)]
+public Resource Get()
+{
+  // ...
+}
+```
+
+
 ### Route links
 
 You can use `[RouteLinkHeader("RouteName")]` instead of `[LinkHeader("URI")]` to generate links that point to WebAPI routes by name.
