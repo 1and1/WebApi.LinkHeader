@@ -27,13 +27,14 @@ You can also use relative links. Relative URIs are resolved server-side and sent
 
 Trailing slashes are implicitly added to request URIs before resolving relative URIs. For example in this case both requests for `http://yourservice/person/1` and `http://yourservice/person/1/` will produce a link to `http://yourservice/person/1/address`:
 ```cs
-[Route("/person/{id}"), LinkHeader("address")]
+[HttpGet, Route("/person/{id}")]
+[LinkHeader("address", Rel = "address")]
 public Person Person(int id)
 {
   // ...
 }
 
-[Route("/people/{id}/address")]
+[HttpGet, Route("/people/{id}/address")]
 public Address Address(int id)
 {
   // ...
@@ -67,14 +68,49 @@ Parameters passed to the annotated target are passed through to the target route
 
 Sample:
 ```cs
-[Route("/person/{id}"), RouteLinkHeader("Address")]
+[HttpGet, Route("/person/{id}")]
+[RouteLinkHeader("Address", Rel = "address")]
 public Person Person(int id)
 {
   // ...
 }
 
-[Route("/address/{id}", Name = "Address")]
+[HttpGet, Route("/people/{id}/address", Name = "Address")]
 public Address Address(int id)
+{
+  // ...
+}
+```
+
+
+### Programatically generated links
+
+You can use the `.AddLink()` extension method for `HttpResponseHeaders` to set programatically generated links.
+
+Sample:
+```cs
+[HttpGet, Route("products")]
+[ResponseType(typeof(IEnumerable<int>))]
+public HttpResponseMessage Products()
+{
+  var productIds = new[] {1, 2, 3};
+  var response = Request.CreateResponse(HttpStatusCode.OK, productIds);
+
+  foreach (var productId in productIds)
+  {
+    response.Headers.AddLink(
+      Url.Link("Product", new {id = productId}),
+      rel: "product",
+      title: "Product #" + productId);
+  }
+  return response;
+}
+
+/// <summary>
+/// Collection element with relative link to child element.
+/// </summary>
+[HttpGet, Route("products/{id}", Name = "Product")]
+public string Product(int id)
 {
   // ...
 }
@@ -83,4 +119,4 @@ public Address Address(int id)
 
 ## Sample project
 
-The source code includes a sample project that uses demonstrates the usage of WebApi.LinkHeader. You can build and run it using Visual Studio 2015. By default the instance will be hosted by IIS Express at `http://localhost:42980/sample/links/` and `http://localhost:42980/sample/route-links/`.
+The source code includes a sample project that uses demonstrates the usage of WebApi.LinkHeader. You can build and run it using Visual Studio 2015. By default the instance will be hosted by IIS Express at `http://localhost:42980/sample/links/`, `http://localhost:42980/sample/route-links/` and `http://localhost:42980/sample/programatic-links/`.

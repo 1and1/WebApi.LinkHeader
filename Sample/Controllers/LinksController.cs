@@ -56,7 +56,7 @@ namespace WebApi.LinkHeader.Sample.Controllers
         [LinkHeader("price", Rel = "price")]
         public string Product(int id)
         {
-            return "Prodcut #" + id;
+            return "Product #" + id;
         }
 
         /// <summary>
