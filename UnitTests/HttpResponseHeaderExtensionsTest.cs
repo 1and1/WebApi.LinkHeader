@@ -38,5 +38,15 @@ namespace WebApi.LinkHeader
             string linkHeader = headers.GetValues("Link").First();
             linkHeader.Should().Be("<http://myuri/{id}>; rel=my-rel; templated=true");
         }
+
+        [Test]
+        public void TestAddLinkString()
+        {
+            var headers = new HttpResponseMessage().Headers;
+            headers.AddLink("http://myuri/123", rel: "my-rel", title: "Title");
+
+            string linkHeader = headers.GetValues("Link").First();
+            linkHeader.Should().Be("<http://myuri/123>; rel=my-rel; title=Title");
+        }
     }
 }

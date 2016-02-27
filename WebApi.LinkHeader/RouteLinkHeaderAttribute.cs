@@ -1,4 +1,3 @@
-using System;
 using System.Net.Http;
 using System.Web.Http.Filters;
 
@@ -45,7 +44,7 @@ namespace WebApi.LinkHeader
 
             string href = actionExecutedContext.Request.GetUrlHelper().Link(RouteName,
                 PassThroughRouteParameters ? actionExecutedContext.Request.GetRouteData().Values : null);
-            actionExecutedContext.Response.Headers.AddLink(new Uri(href, UriKind.Absolute), Rel, Title);
+            actionExecutedContext.Response.Headers.AddLink(href, Rel, Title);
         }
     }
 }
