@@ -45,7 +45,7 @@ namespace WebApi.LinkHeader
             string href = Href.StartsWith("/")
                 ? EnsureTrailingSlash(actionExecutedContext.Request.GetRequestContext().VirtualPathRoot) + Href.Substring(1)
                 : Href;
-            var uri = new Uri(EnsureTrailingSlash(actionExecutedContext.Request.RequestUri), href);
+            var uri = new Uri(actionExecutedContext.Request.RequestUri.EnsureTrailingSlash(), href);
 
             actionExecutedContext.Response.Headers.AddLink(uri, Rel, Title, Templated);
         }
@@ -56,16 +56,6 @@ namespace WebApi.LinkHeader
         private static string EnsureTrailingSlash(string uri)
         {
             return uri.EndsWith("/") ? uri : uri + "/";
-        }
-
-        /// <summary>
-        /// Adds a trailing slash to the URI if it does not already have one.
-        /// </summary>
-        private static Uri EnsureTrailingSlash(Uri uri)
-        {
-            return uri.OriginalString.EndsWith("/")
-                ? uri
-                : new Uri(uri.OriginalString + "/", uri.IsAbsoluteUri ? UriKind.Absolute : UriKind.Relative);
         }
     }
 }

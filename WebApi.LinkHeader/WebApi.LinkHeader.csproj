@@ -64,6 +64,7 @@
     <Compile Include="HttpResponseHeadersExtensions.cs" />
     <Compile Include="LinkHeaderAttribute.cs" />
     <Compile Include="RouteLinkHeaderAttribute.cs" />
+    <Compile Include="UriExtensions.cs" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
