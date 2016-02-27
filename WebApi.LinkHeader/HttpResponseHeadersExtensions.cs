@@ -18,7 +18,7 @@ namespace WebApi.LinkHeader
         public static void AddLink(this HttpResponseHeaders headers, Uri href, string rel = null,
             string title = null, bool templated = false)
         {
-            string escaped = href.AbsoluteUri;
+            string escaped = href.ToStringRfc();
 
             // Preserve curly braces unescaped for template support
             if (templated) escaped = escaped.Replace("%7B", "{").Replace("%7D", "}");

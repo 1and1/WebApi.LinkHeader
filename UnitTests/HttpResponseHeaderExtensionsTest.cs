@@ -20,6 +20,16 @@ namespace WebApi.LinkHeader
         }
 
         [Test]
+        public void TestAddLinkRelative()
+        {
+            var headers = new HttpResponseMessage().Headers;
+            headers.AddLink(new Uri("relative", UriKind.Relative), rel: "my-rel", title: "Title");
+
+            string linkHeader = headers.GetValues("Link").First();
+            linkHeader.Should().Be("<relative>; rel=my-rel; title=Title");
+        }
+
+        [Test]
         public void TestAddLinkEscaping()
         {
             var headers = new HttpResponseMessage().Headers;
