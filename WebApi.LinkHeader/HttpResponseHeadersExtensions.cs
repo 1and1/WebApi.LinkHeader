@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Net.Http.Headers;
 using System.Text;
 
@@ -17,20 +18,27 @@ namespace WebApi.LinkHeader
         public static void AddLink(this HttpResponseHeaders headers, Uri href, string rel = null,
             string title = null, bool templated = false)
         {
-            if (rel != null && (rel.Contains(",") || rel.Contains(";"))) throw new ArgumentException("rel may not contain commas or semicolons because they are used as separator characters in HTTP headers.", nameof(rel));
-            if (title != null && (title.Contains(",") || title.Contains(";"))) throw new ArgumentException("title may not contain commas or semicolons because they are used as separator characters in HTTP headers.", nameof(title));
-
             string escaped = href.AbsoluteUri;
 
             // Preserve curly braces unescaped for template support
             if (templated) escaped = escaped.Replace("%7B", "{").Replace("%7D", "}");
 
             var builder = new StringBuilder("<" + escaped + ">");
-            if (!string.IsNullOrEmpty(rel)) builder.Append("; rel=" + rel);
-            if (!string.IsNullOrEmpty(title)) builder.Append("; title=" + title);
+            if (!string.IsNullOrEmpty(rel)) builder.Append("; rel=" + Escape(rel));
+            if (!string.IsNullOrEmpty(title)) builder.Append("; title=" + Escape(title));
             if (templated) builder.Append("; templated=true");
 
             headers.Add("Link", builder.ToString());
+        }
+
+        /// <summary>
+        /// Escapes a string for safe use as a property value in an HTTP header field.
+        /// </summary>
+        private static string Escape(string value)
+        {
+            return value.Any(x => char.IsWhiteSpace(x) || x == ';' || x == ',')
+                ? "\"" + value.Replace("\"", "\\\"") + "\""
+                : value;
         }
     }
 }

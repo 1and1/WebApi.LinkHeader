@@ -20,6 +20,16 @@ namespace WebApi.LinkHeader
         }
 
         [Test]
+        public void TestAddLinkEscaping()
+        {
+            var headers = new HttpResponseMessage().Headers;
+            headers.AddLink(new Uri("http://myuri/{id}"), rel: "my;rel", title: "My Title");
+
+            string linkHeader = headers.GetValues("Link").First();
+            linkHeader.Should().Be("<http://myuri/%7Bid%7D>; rel=\"my;rel\"; title=\"My Title\"");
+        }
+
+        [Test]
         public void TestAddLinkTemplate()
         {
             var headers = new HttpResponseMessage().Headers;
