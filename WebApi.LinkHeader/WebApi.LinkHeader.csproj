@@ -61,6 +61,7 @@
   <ItemGroup>
     <Compile Include="..\AssemblyInfo.Global.cs" />
     <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="HttpRequestMessageExtensions.cs" />
     <Compile Include="HttpResponseHeadersExtensions.cs" />
     <Compile Include="LinkHeaderAttribute.cs" />
     <Compile Include="RouteLinkHeaderAttribute.cs" />

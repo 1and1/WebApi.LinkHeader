@@ -45,7 +45,7 @@ namespace WebApi.LinkHeader
             string href = Href.StartsWith("/")
                 ? EnsureTrailingSlash(actionExecutedContext.Request.GetRequestContext().VirtualPathRoot) + Href.Substring(1)
                 : Href;
-            var uri = new Uri(actionExecutedContext.Request.RequestUri.EnsureTrailingSlash(), href);
+            var uri = actionExecutedContext.Request.RelativeLink(href);
 
             actionExecutedContext.Response.Headers.AddLink(uri, Rel, Title, Templated);
         }

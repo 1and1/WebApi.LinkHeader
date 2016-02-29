@@ -22,7 +22,7 @@ namespace WebApi.LinkHeader.Sample.Controllers
             var response = Request.CreateResponse(HttpStatusCode.NoContent);
 
             response.Headers.AddLink(
-                new Uri(Request.RequestUri.EnsureTrailingSlash(), "products"),
+                Request.RelativeLink("products"),
                 rel: "products");
             return response;
         }
@@ -43,6 +43,11 @@ namespace WebApi.LinkHeader.Sample.Controllers
                     Url.Link("Product", new {id = productId}),
                     rel: "product",
                     title: "Product #" + productId);
+                // -or-
+                //response.Headers.AddLink(
+                //    Request.RelativeLink("products/" + productId),
+                //    rel: "product",
+                //    title: "Product #" + productId);
             }
             return response;
         }

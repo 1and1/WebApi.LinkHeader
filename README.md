@@ -102,6 +102,11 @@ public HttpResponseMessage Products()
       Url.Link("Product", new {id = productId}),
       rel: "product",
       title: "Product #" + productId);
+     // -or-
+     response.Headers.AddLink(
+      Request.RelativeLink("products/" + productId),
+      rel: "product",
+      title: "Product #" + productId);
   }
   return response;
 }
