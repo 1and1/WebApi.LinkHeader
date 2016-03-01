@@ -1,3 +1,4 @@
+using System;
 using System.Net.Http;
 using System.Web.Http.Filters;
 
@@ -44,6 +45,7 @@ namespace WebApi.LinkHeader
 
             string href = actionExecutedContext.Request.GetUrlHelper().Link(RouteName,
                 PassThroughRouteParameters ? actionExecutedContext.Request.GetRouteData().Values : null);
+            if (string.IsNullOrEmpty(href)) throw new InvalidOperationException($"Unable to resolve route {RouteName}.");
             actionExecutedContext.Response.Headers.AddLink(href, Rel, Title);
         }
     }
