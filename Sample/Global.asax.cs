@@ -1,6 +1,6 @@
 ﻿using System.Web.Http;
 
-namespace WebApi.LinkHeader.Sample
+namespace LinkHeaderSample
 {
     public class WebApiApplication : System.Web.HttpApplication
     {

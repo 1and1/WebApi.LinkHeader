@@ -2,13 +2,15 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Web.Http;
 using System.Web.Http.Description;
+using WebApi.LinkHeader;
 
-namespace WebApi.LinkHeader.Sample.Controllers
+namespace LinkHeaderSample.Controllers
 {
     /// <summary>
-    /// Demonstrates the usage of <see cref="HttpResponseHeadersExtensions.AddLink(System.Net.Http.Headers.HttpResponseHeaders,Uri,string,string,bool)"/>.
+    /// Demonstrates the usage of <see cref="WebApi.LinkHeader.HttpResponseHeadersExtensions.AddLink(HttpResponseHeaders,Uri,string,string,bool)"/>.
     /// </summary>
     [RoutePrefix("programatic-links")]
     public class ProgramaticLinksController : ApiController

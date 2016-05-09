@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web.Http;
+using WebApi.LinkHeader;
 
-namespace WebApi.LinkHeader.Sample.Controllers
+namespace LinkHeaderSample.Controllers
 {
     /// <summary>
     /// Demonstrates the usage of the <see cref="RouteLinkHeaderAttribute"/>.
