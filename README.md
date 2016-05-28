@@ -85,7 +85,7 @@ public Address Address(int id)
 
 ### Programatically generated links
 
-You can use the `.AddLink()` extension method for `HttpResponseHeaders` to set programatically generated links.
+You can use the `.AddLink()` extension method for `HttpResponseMessage` to set programatically generated links.
 
 Sample:
 ```cs
@@ -98,13 +98,13 @@ public HttpResponseMessage Products()
 
   foreach (var productId in productIds)
   {
-    response.Headers.AddLink(
+    response.AddLink(
       Url.Link("Product", new {id = productId}),
       rel: "product",
       title: "Product #" + productId);
-     // -or-
-     response.Headers.AddLink(
-      Request.RelativeLink("products/" + productId),
+    // -or-
+    response.AddLink(
+      "products/" + productId,
       rel: "product",
       title: "Product #" + productId);
   }

@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Web.Http;
 using System.Web.Http.Description;
 using WebApi.LinkHeader;
@@ -10,7 +8,7 @@ using WebApi.LinkHeader;
 namespace LinkHeaderSample.Controllers
 {
     /// <summary>
-    /// Demonstrates the usage of <see cref="WebApi.LinkHeader.HttpResponseHeadersExtensions.AddLink(HttpResponseHeaders,Uri,string,string,bool)"/>.
+    /// Demonstrates the usage of <see cref="HttpMessageExtensions.AddLink"/>.
     /// </summary>
     [RoutePrefix("programatic-links")]
     public class ProgramaticLinksController : ApiController
@@ -41,13 +39,13 @@ namespace LinkHeaderSample.Controllers
 
             foreach (var productId in productIds)
             {
-                response.Headers.AddLink(
+                response.AddLink(
                     Url.Link("Product", new {id = productId}),
                     rel: "product",
                     title: "Product #" + productId);
                 // -or-
-                //response.Headers.AddLink(
-                //    Request.RelativeLink("products/" + productId),
+                //response.AddLink(
+                //    "products/" + productId,
                 //    rel: "product",
                 //    title: "Product #" + productId);
             }

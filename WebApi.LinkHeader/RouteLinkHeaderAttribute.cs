@@ -41,12 +41,17 @@ namespace WebApi.LinkHeader
 
         public override void OnActionExecuted(HttpActionExecutedContext actionExecutedContext)
         {
-            if (actionExecutedContext.Response == null) return;
+            actionExecutedContext.Response
+                ?.AddLink(GetHref(actionExecutedContext), Rel, Title);
+        }
 
+        private string GetHref(HttpActionExecutedContext actionExecutedContext)
+        {
             string href = actionExecutedContext.Request.GetUrlHelper().Link(RouteName,
                 PassThroughRouteParameters ? actionExecutedContext.Request.GetRouteData().Values : null);
-            if (string.IsNullOrEmpty(href)) throw new InvalidOperationException($"Unable to resolve route {RouteName}.");
-            actionExecutedContext.Response.Headers.AddLink(href, Rel, Title);
+            if (string.IsNullOrEmpty(href))
+                throw new InvalidOperationException($"Unable to resolve route {RouteName}.");
+            return href;
         }
     }
 }

@@ -39,22 +39,8 @@ namespace WebApi.LinkHeader
 
         public override void OnActionExecuted(HttpActionExecutedContext actionExecutedContext)
         {
-            if (actionExecutedContext.Response == null) return;
-
-            string href = Href.StartsWith("/")
-                ? EnsureTrailingSlash(actionExecutedContext.Request.GetRequestContext().VirtualPathRoot) + Href.Substring(1)
-                : Href;
-            var uri = actionExecutedContext.Request.RelativeLink(href);
-
-            actionExecutedContext.Response.Headers.AddLink(uri, Rel, Title, Templated);
-        }
-
-        /// <summary>
-        /// Adds a trailing slash to the URI if it does not already have one.
-        /// </summary>
-        private static string EnsureTrailingSlash(string uri)
-        {
-            return uri.EndsWith("/") ? uri : uri + "/";
+            actionExecutedContext.Response
+                ?.AddLink(Href, Rel, Title, Templated);
         }
     }
 }

@@ -61,8 +61,8 @@
   <ItemGroup>
     <Compile Include="..\GlobalAssemblyInfo.cs" />
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="HttpRequestMessageExtensions.cs" />
-    <Compile Include="HttpResponseHeadersExtensions.cs" />
+    <Compile Include="HttpMessageExtensions.cs" />
+    <Compile Include="HttpHeadersExtensions.cs" />
     <Compile Include="LinkHeaderAttribute.cs" />
     <Compile Include="RouteLinkHeaderAttribute.cs" />
     <Compile Include="UriExtensions.cs" />

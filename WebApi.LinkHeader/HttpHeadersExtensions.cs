@@ -5,10 +5,10 @@ using System.Text;
 
 namespace WebApi.LinkHeader
 {
-    public static class HttpResponseHeadersExtensions
+    public static class HttpHeadersExtensions
     {
         /// <summary>
-        /// Adds a Link header.
+        /// Adds a Link header to HTTP response headers.
         /// </summary>
         /// <param name="headers">The header collection to add the Link header to.</param>
         /// <param name="href">The URI the link shall point to.</param>
@@ -39,20 +39,6 @@ namespace WebApi.LinkHeader
             return value.Any(x => char.IsWhiteSpace(x) || x == ';' || x == ',')
                 ? "\"" + value.Replace("\"", "\\\"") + "\""
                 : value;
-        }
-
-        /// <summary>
-        /// Adds a Link header.
-        /// </summary>
-        /// <param name="headers">The header collection to add the Link header to.</param>
-        /// <param name="href">The URI the link shall point to.</param>
-        /// <param name="rel">The relation type of the link.</param>
-        /// <param name="title">A human-readable description of the link.</param>
-        /// <param name="templated"><c>true</c> if <paramref name="href"/> is an RFC 6570 URI Template; <c>false</c> if it is a normal RFC 3986 URI.</param>
-        public static void AddLink(this HttpResponseHeaders headers, string href, string rel = null,
-            string title = null, bool templated = false)
-        {
-            headers.AddLink(new Uri(href, UriKind.RelativeOrAbsolute), rel, title, templated);
         }
     }
 }
