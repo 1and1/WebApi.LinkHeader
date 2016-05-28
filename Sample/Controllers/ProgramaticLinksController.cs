@@ -8,7 +8,7 @@ using WebApi.LinkHeader;
 namespace LinkHeaderSample.Controllers
 {
     /// <summary>
-    /// Demonstrates the usage of <see cref="HttpMessageExtensions.AddLink"/>.
+    /// Demonstrates the usage of <see cref="HttpMessageExtensions.AddLink"/> and  <see cref="HttpActionResultExtensions.WithLink"/>.
     /// </summary>
     [RoutePrefix("programatic-links")]
     public class ProgramaticLinksController : ApiController
@@ -17,14 +17,10 @@ namespace LinkHeaderSample.Controllers
         /// Entry point with relative links to child elements.
         /// </summary>
         [HttpGet, Route("")]
-        public HttpResponseMessage Overview()
+        public IHttpActionResult Overview()
         {
-            var response = Request.CreateResponse(HttpStatusCode.NoContent);
-
-            response.Headers.AddLink(
-                Request.RelativeLink("products"),
-                rel: "products");
-            return response;
+            return StatusCode(HttpStatusCode.NoContent)
+                .WithLink("products", rel: "products");
         }
 
         /// <summary>
