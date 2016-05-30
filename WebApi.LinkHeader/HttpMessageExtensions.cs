@@ -20,6 +20,20 @@ namespace WebApi.LinkHeader
         }
 
         /// <summary>
+        /// Adds a Link header to an HTTP response message.
+        /// </summary>
+        /// <param name="response">The message to add the Link header to.</param>
+        /// <param name="routeName">The name of the WebAPI route the link shall point to.</param>
+        /// <param name="routeValues">The route data to use for generating the URI.</param>
+        /// <param name="rel">The relation type of the link.</param>
+        /// <param name="title">A human-readable description of the link.</param>
+        public static void AddRouteLink(this HttpResponseMessage response, string routeName, object routeValues, string rel = null,
+            string title = null)
+        {
+            response.Headers.AddLink(new Uri(response.RequestMessage.GetUrlHelper().Link(routeName, routeValues)), rel, title);
+        }
+
+        /// <summary>
         /// Resolves a relative link.
         /// If it starts with a slash it is relative to the API root URI otherwise it is relative to the <see cref="HttpRequestMessage.RequestUri"/>.
         /// Trailing slashes are automatically appended to the base URI.

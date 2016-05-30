@@ -66,6 +66,7 @@
     <Compile Include="HttpHeadersExtensions.cs" />
     <Compile Include="LinkedResult.cs" />
     <Compile Include="LinkHeaderAttribute.cs" />
+    <Compile Include="RouteLinkedResult.cs" />
     <Compile Include="RouteLinkHeaderAttribute.cs" />
     <Compile Include="UriExtensions.cs" />
     <None Include="packages.config" />

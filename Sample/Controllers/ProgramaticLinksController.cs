@@ -20,13 +20,15 @@ namespace LinkHeaderSample.Controllers
         public IHttpActionResult Overview()
         {
             return StatusCode(HttpStatusCode.NoContent)
-                .WithLink("products", rel: "products");
+                .WithRouteLink("Products", rel: "products");
+                // -or
+                //.WithLink("products", rel: "products");
         }
 
         /// <summary>
         /// Collection with a template link for the child elements.
         /// </summary>
-        [HttpGet, Route("products")]
+        [HttpGet, Route("products", Name = "Products")]
         [ResponseType(typeof(IEnumerable<int>))]
         public HttpResponseMessage Products()
         {
@@ -35,13 +37,11 @@ namespace LinkHeaderSample.Controllers
 
             foreach (var productId in productIds)
             {
-                response.AddLink(
-                    Url.Link("Product", new {id = productId}),
+                response.AddRouteLink("Product", new {id = productId},
                     rel: "product",
                     title: "Product #" + productId);
                 // -or-
-                //response.AddLink(
-                //    "products/" + productId,
+                //response.AddLink("products/" + productId,
                 //    rel: "product",
                 //    title: "Product #" + productId);
             }

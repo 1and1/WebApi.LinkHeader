@@ -18,5 +18,19 @@ namespace WebApi.LinkHeader
         {
             return new LinkedResult(result, href, rel, title, templated);
         }
+
+        /// <summary>
+        /// Creates a wrapper around the result that adds a Link header pointing to WebAPI route.
+        /// </summary>
+        /// <param name="result">The result to add the Link header to.</param>
+        /// <param name="routeName">The name of the WebAPI route the link shall point to.</param>
+        /// <param name="routeValues">The route data to use for generating the URI.</param>
+        /// <param name="rel">The relation type of the link.</param>
+        /// <param name="title">A human-readable description of the link.</param>
+        public static IHttpActionResult WithRouteLink(this IHttpActionResult result, string routeName, object routeValues = null, string rel = null,
+            string title = null)
+        {
+            return new RouteLinkedResult(result, routeName, routeValues, rel, title);
+        }
     }
 }

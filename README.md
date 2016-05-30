@@ -85,7 +85,7 @@ public Address Address(int id)
 
 ### Programatically generated links
 
-You can use the `.AddLink()` extension method for `HttpResponseMessage` or `.WithLink()` for `IHttpActionResult` to set programatically generated links.
+You can use the `.AddLink()` / `.AddRouteLink()` extension methods for `HttpResponseMessage` or `.WithLink()` / `.WithRouteLink()` for `IHttpActionResult` to set programatically generated links.
 
 Samples:
 ```cs
@@ -93,10 +93,12 @@ Samples:
 public IHttpActionResult Overview()
 {
   return StatusCode(HttpStatusCode.NoContent)
+    .WithRouteLink("Products", rel: "products");
+    // -or-
     .WithLink("products", rel: "products");
 }
 
-[HttpGet, Route("products")]
+[HttpGet, Route("products", Name = "Products")]
 [ResponseType(typeof(IEnumerable<int>))]
 public HttpResponseMessage Products()
 {
@@ -105,13 +107,11 @@ public HttpResponseMessage Products()
 
   foreach (var productId in productIds)
   {
-    response.AddLink(
-      Url.Link("Product", new {id = productId}),
+    response.AddRouteLink("Product", new {id = productId},
       rel: "product",
       title: "Product #" + productId);
     // -or-
-    response.AddLink(
-      "products/" + productId,
+    response.AddLink("products/" + productId,
       rel: "product",
       title: "Product #" + productId);
   }
