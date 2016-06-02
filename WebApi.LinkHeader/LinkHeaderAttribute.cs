@@ -9,7 +9,7 @@ namespace WebApi.LinkHeader
     public class LinkHeaderAttribute : ActionFilterAttribute
     {
         /// <summary>
-        /// The URI the link shall point to. If it starts with a slash it is relative to the API root URI otherwise it is relative to the <see cref="HttpRequestMessage.RequestUri"/>. Trailing slashes are automatically appended to the base URI.
+        /// The URI the link shall point to. If it starts with a slash it is relative to the virtual path root otherwise it is relative to the <see cref="HttpRequestMessage.RequestUri"/>. Trailing slashes are automatically appended to the base URI.
         /// </summary>
         public string Href { get; }
 
@@ -31,7 +31,7 @@ namespace WebApi.LinkHeader
         /// <summary>
         /// Creates a link attribute.
         /// </summary>
-        /// <param name="href">The URI the link shall point to. If it starts with a slash it is relative to the API root URI otherwise it is relative to the <see cref="HttpRequestMessage.RequestUri"/>. Trailing slashes are automatically appended to the base URI.</param>
+        /// <param name="href">The URI the link shall point to. If it starts with a slash it is relative to the virtual path root otherwise it is relative to the <see cref="HttpRequestMessage.RequestUri"/>. Trailing slashes are automatically appended to the base URI.</param>
         public LinkHeaderAttribute(string href)
         {
             Href = href;

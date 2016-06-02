@@ -47,7 +47,7 @@ namespace WebApi.LinkHeader
                 {
                     [HttpPropertyKeys.RequestContextKey] = new HttpRequestContext
                     {
-                        VirtualPathRoot = "http://localhost/api"
+                        VirtualPathRoot = "/api"
                     }
                 }
             };
